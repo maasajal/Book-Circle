@@ -1,29 +1,51 @@
-import React from 'react';
-import './App.css';
-import {
-  BrowserRouter, Routes, Route
-} from 'react-router-dom';
-import { AppProvider } from './context.';
-import Home from './pages/Home/Home';
-import About from "./pages/About/About";
-import BookList from "./components/BookList/BookList";
-import BookDetails from "./components/BookDetails/BookDetails";
+import React, { useContext } from "react";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <AppProvider>
-    <BrowserRouter>
+    <div>
+      <Header />
       <Routes>
-        <Route exact path =  "/" element = {<Home />}>
-          <Route path = "about" element = {<About />} />
-          <Route path = "book" element = {<BookList />} />
-          <Route path = "/book/:id" element = {<BookDetails />} />
-        </Route>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        {/* <Route path="membership" element={<Membership />} />
+        <Route path="login" element={<Login />} />
+        <Route path="admin" element={<RequireAuth><AdminNews /></RequireAuth>} /> */}
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: "2rem" }}>
+              <p>There's nothing here!</p>
+            </main>
+          }
+        />
       </Routes>
-    </BrowserRouter>
-  </AppProvider>
-  )
-}
+      <Outlet />
 
-export default App
+      {/* <Routes>
+        <Route exact path="/" element={<Home />}>
+          <Route path="about" element={<About />} />
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+        </Route>
+      </Routes> */}
 
+      <Footer />
+    </div>
+  );
+};
+
+export default App;
